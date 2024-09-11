@@ -3,11 +3,11 @@ CFLAGS=-std=c99
 
 all: base opt
 
-base: TestBase.o
-		$(CC) -o base TestBase.o
+base: TestBase.o MeasureFunction.o
+		$(CC) -o base TestBase.o MeasureFunction.o
 
-opt: TestFast.o
-		$(CC) -o opt TestFast.o
+opt: TestFast.o MeasureFunction.o
+		$(CC) -o opt TestFast.o MeasureFunction.o
 
 .PHONY: clean
 
