@@ -5,6 +5,8 @@
 #include <unistd.h>
 #include <stdint.h>
 
+#define _POSIX_C_SOURCE 200809L
+
 unsigned int clockTimeToMilliseconds(clock_t clockTime) {
     return 1000 * clockTime / CLOCKS_PER_SEC;
 }
