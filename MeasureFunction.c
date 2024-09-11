@@ -16,7 +16,8 @@ unsigned int measureTimeInMilliseconds(void (*func)()) {
     func();
     end = clock();
 
-    printf("Clock_t time: %ld\n", end - start);
+    printf("Clock_t time start: %ld\n", start);
+    printf("Clock_t time end: %ld\n", end);
 
     return clockTimeToMilliseconds(end - start);
 }
