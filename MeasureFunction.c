@@ -1,4 +1,4 @@
-#include <time.h>
+#include "MeasureFunction.h"
 
 unsigned int clockTimeToMilliseconds(clock_t clockTime) {
     return 1000 * clockTime / CLOCKS_PER_SEC;

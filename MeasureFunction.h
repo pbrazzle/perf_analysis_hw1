@@ -1,3 +1,5 @@
+#include <time.h>
+
 unsigned int clockTimeToMilliseconds(clock_t clockTime);
 
 unsigned int measureTimeInMilliseconds(void (*func)());
