@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 unsigned int clockTimeToMilliseconds(clock_t clockTime) {
     return 1000 * clockTime / CLOCKS_PER_SEC;
@@ -11,6 +12,7 @@ unsigned int measureTimeInMilliseconds(void (*func)()) {
     clock_t start, end;
     
     start = clock();
+    sleep(1);
     func();
     end = clock();
 
