@@ -3,11 +3,11 @@ CFLAGS=-std=c99
 
 all: base opt
 
-base: TopologicalSortAI.o
-        $(CC) -o base TopologicalSortAI.o
+base: TestBase.o
+        $(CC) -o base TestBase.o
 
-opt: TopologicalSortAIFast.o
-        $(CC) -o opt TopologicalSortAIFast.o
+opt: TestFast.o
+        $(CC) -o opt TestFast.o
 
 .PHONY: clean
 

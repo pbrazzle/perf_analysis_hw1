@@ -150,6 +150,7 @@ void topologicalSort(Graph *g) {
     free(q);
 }
 
+/*
 int main() {
     int vertices = 6;
     Graph *g = createGraph(vertices);
@@ -180,4 +181,4 @@ int main() {
     free(g);
     
     return 0;
-}
+}*/

@@ -108,6 +108,7 @@ void topologicalSort(Graph *g) {
     }
 }
 
+/*
 // Main function to demonstrate the usage
 int main() {
     Graph g;
@@ -128,3 +129,4 @@ int main() {
     
     return 0;
 }
+*/
