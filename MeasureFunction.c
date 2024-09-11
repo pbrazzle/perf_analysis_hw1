@@ -15,7 +15,7 @@ unsigned int measureTimeInMilliseconds(void (*func)()) {
 }
 
 unsigned int* measureMultipleRuns(void (*func)(), unsigned int trials) {
-    unsigned int* times = malloc(trials * sizeof(unsigned int));
+    unsigned int* times = (unsigned int*) malloc(trials * sizeof(unsigned int));
 
     for (int i = 0; i < trials; ++i) {
         times[i] = measureTimeInMilliseconds(func);

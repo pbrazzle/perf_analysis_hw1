@@ -2,9 +2,9 @@
 #include "TopologicalSortAIFast.c"
 
 Graph* g;
+int vertices = 6;
 
 void init() {
-    int vertices = 6;
     Graph *g = createGraph(vertices);
 
     // Adding edges to the graph
