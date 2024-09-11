@@ -29,7 +29,7 @@ void refreshInDegree(Graph* g) {
     }
 
     for (i = 0; i < g->numVertices; i++) {
-        refreshForList(i);
+        refreshForList(g, i);
     }
 }
 
