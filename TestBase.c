@@ -9,7 +9,7 @@ void init() {
 
     // Adding edges to the graph
     int i;
-    for (i = 0; i < vertices-1; i++) {
+    for (i = vertices-1; i >= 0; i--) {
         addEdge(&g, i, i+1);
     }
 }
