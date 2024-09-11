@@ -4,13 +4,25 @@
 Graph g;
 
 void init() {
-    int vertices = 500;  // Number of vertices in the graph
+    int vertices = 10;  // Number of vertices in the graph
     initializeGraph(&g, vertices);
 
     // Adding edges to the graph
-    int i;
-    for (i = vertices-1; i >= 0; i--) {
-        addEdge(&g, i, i+1);
+    while (vertices > 0) {
+        // Spread out
+        int i;
+        for (i = 1; i <= 5; i++) {
+            addEdge(&g, vertices-1, vertices-1-i);
+            if (vertices-1-i == 0) return;
+        }
+        
+        // Collapse in
+        if (vertices-7 < 0) return;
+        for (i = 1; i <= 5; i++) {
+            addEdge(&g, vertices-1-i, vertices-7);
+        }
+
+        vertices -= 6;
     }
 }
 
