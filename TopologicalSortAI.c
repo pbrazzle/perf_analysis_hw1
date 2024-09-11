@@ -1,148 +1,130 @@
 /*
-C implementation of Kahn's algorithm
-Written by ChatGPT 9/4/2024
-    No previous chat history, no account
-
----ChatGPT Prompt---
-
-Provide an implementation of Kahn's algorithm in C
-
----ChatGPT Text Output---
-
-Kahn's algorithm is used for topological sorting of a directed acyclic graph (DAG). 
-The algorithm works by maintaining a list of nodes with no incoming edges (nodes with in-degree 0). 
-It repeatedly removes these nodes from the graph and updates the in-degree of their neighbors. 
-If the graph is a DAG, the algorithm will produce a valid topological ordering.
-
-Here's an implementation of Kahn's algorithm in C:
-
-Explanation:
-
-    Initialization:
-        initQueue initializes the queue used for processing nodes with in-degree 0.
-        inDegree is an array that keeps track of the in-degrees of all vertices.
-
-    In-Degree Calculation:
-        We calculate the in-degree of each vertex by counting the number of incoming edges.
-
-    Queue Management:
-        Vertices with in-degree 0 are enqueued initially.
-
-    Processing:
-        The algorithm processes each vertex from the queue, updates the in-degrees of its neighbors, and enqueues neighbors whose in-degrees become 0.
-
-    Cycle Detection:
-        If the number of vertices processed is less than the total number of vertices, the graph contains a cycle.
-
-    Output:
-        If the graph is acyclic, the topological order is printed; otherwise, a cycle message is displayed.
-
-This implementation assumes the graph is represented as an adjacency matrix. For larger graphs or different representations (like adjacency lists), adjustments would be needed.
+*   C implementation of Kahn's algorithm
+*   Written by ChatGPT-4o mini
+*
+*   --- Prompt: Please provide a C implementation to find a topological ordering of a directed acyclic graph
+*
+*   --- ChatGPT Output:
+*
+*   Certainly! 
+*   To find a topological ordering of a Directed Acyclic Graph (DAG) in C, you can use Kahn's Algorithm or Depth-First Search (DFS) based algorithm. 
+*   Below is a C implementation using Kahn's Algorithm, which is often simpler to understand and implement. 
+*   Kahn's Algorithm uses an in-degree array to keep track of the number of incoming edges to each vertex and a queue to process vertices with zero in-degree.
+*
+*   Here's a complete C implementation for finding a topological ordering using Kahn's Algorithm:
+*
+*   [code]
+*
+*   Explanation:
+*
+*   1. Graph Representation: The graph is represented using an adjacency matrix `adjMatrix`, where `adjMatrix[i][j]` is `1` if there's an edge from vertex `i` to vertex `j`.
+*   2. In-Degree Calculation: Calculate the in-degrees for each vertex. The in-degree of a vertex is the number of edges directed towards it.
+*   3. Queue Initialization: Enqueue all vertices with in-degree of 0 (no incoming edges).
+*   4. Process Queue: Dequeue a vertex, print it, and reduce the in-degrees of its adjacent vertices. Enqueue any adjacent vertex that now has an in-degree of 0.
+*   5. Cycle Detection: If the number of vertices processed is less than the total number of vertices, a cycle exists in the graph.
+*
+*   This implementation assumes that the graph has a maximum of 100 vertices. 
+*   Adjust `MAX_VERTICES` as needed for larger graphs. 
+*   The graph should be a DAG for the topological sort to be valid; otherwise, the algorithm will detect the cycle.
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
-// Define the maximum number of vertices
 #define MAX_VERTICES 100
 
-// Structure for a queue
+// A structure to represent a graph
 typedef struct {
-    int items[MAX_VERTICES];
-    int front, rear;
-} Queue;
+    int numVertices;
+    int adjMatrix[MAX_VERTICES][MAX_VERTICES];
+} Graph;
 
-// Function to initialize a queue
-void initQueue(Queue *q) {
-    q->front = 0;
-    q->rear = -1;
+// Function to create a graph with a given number of vertices
+void initializeGraph(Graph *g, int vertices) {
+    g->numVertices = vertices;
+    for (int i = 0; i < vertices; i++) {
+        for (int j = 0; j < vertices; j++) {
+            g->adjMatrix[i][j] = 0;
+        }
+    }
 }
 
-// Function to check if the queue is empty
-bool isEmpty(Queue *q) {
-    return q->front > q->rear;
+// Function to add an edge to the graph
+void addEdge(Graph *g, int src, int dest) {
+    g->adjMatrix[src][dest] = 1;
 }
 
-// Function to add an element to the queue
-void enqueue(Queue *q, int item) {
-    q->items[++q->rear] = item;
-}
-
-// Function to remove an element from the queue
-int dequeue(Queue *q) {
-    return q->items[q->front++];
-}
-
-// Function to perform topological sort using Kahn's algorithm
-void kahnTopologicalSort(int graph[MAX_VERTICES][MAX_VERTICES], int numVertices) {
-    int inDegree[MAX_VERTICES] = {0};  // Array to store in-degrees of all vertices
-    Queue q;
-    initQueue(&q);
+// Function to perform topological sort using Kahn's Algorithm
+void topologicalSort(Graph *g) {
+    int inDegree[MAX_VERTICES] = {0};
+    int queue[MAX_VERTICES];
+    int front = 0, rear = 0;
     
     // Calculate in-degrees of all vertices
-    for (int i = 0; i < numVertices; i++) {
-        for (int j = 0; j < numVertices; j++) {
-            if (graph[j][i]) {
+    for (int i = 0; i < g->numVertices; i++) {
+        for (int j = 0; j < g->numVertices; j++) {
+            if (g->adjMatrix[j][i] == 1) {
                 inDegree[i]++;
             }
         }
     }
     
-    // Enqueue vertices with in-degree 0
-    for (int i = 0; i < numVertices; i++) {
+    // Enqueue all vertices with in-degree 0
+    for (int i = 0; i < g->numVertices; i++) {
         if (inDegree[i] == 0) {
-            enqueue(&q, i);
+            queue[rear++] = i;
         }
     }
     
-    // List to store the topological order
-    int topologicalOrder[MAX_VERTICES];
-    int index = 0;
+    // Initialize count of visited vertices
+    int visitedCount = 0;
     
-    // Process the vertices
-    while (!isEmpty(&q)) {
-        int u = dequeue(&q);
-        topologicalOrder[index++] = u;
+    while (front != rear) {
+        int u = queue[front++];
         
-        // Reduce in-degrees of adjacent vertices
-        for (int v = 0; v < numVertices; v++) {
-            if (graph[u][v]) {
-                if (--inDegree[v] == 0) {
-                    enqueue(&q, v);
+        printf("%d ", u);
+        
+        // Decrease the in-degree of all adjacent vertices
+        for (int v = 0; v < g->numVertices; v++) {
+            if (g->adjMatrix[u][v] == 1) {
+                inDegree[v]--;
+                
+                // If in-degree becomes 0, enqueue it
+                if (inDegree[v] == 0) {
+                    queue[rear++] = v;
                 }
             }
         }
+        
+        visitedCount++;
     }
     
-    // Check if there was a cycle
-    if (index != numVertices) {
-        printf("The graph contains a cycle.\n");
+    // Check if there was a cycle in the graph
+    if (visitedCount != g->numVertices) {
+        printf("\nThe graph contains a cycle\n");
     } else {
-        // Print the topological order
-        printf("Topological Order:\n");
-        for (int i = 0; i < numVertices; i++) {
-            printf("%d ", topologicalOrder[i]);
-        }
-        printf("\n");
+        printf("\nTopological sort completed\n");
     }
 }
 
+// Main function to demonstrate the usage
 int main() {
-    // Example graph: 6 vertices, edges as follows
-    // (0->1), (0->2), (1->3), (1->4), (2->4), (3->5), (4->5)
-    int graph[MAX_VERTICES][MAX_VERTICES] = {0};
-    int numVertices = 6;
-
-    graph[0][1] = 1;
-    graph[0][2] = 1;
-    graph[1][3] = 1;
-    graph[1][4] = 1;
-    graph[2][4] = 1;
-    graph[3][5] = 1;
-    graph[4][5] = 1;
+    Graph g;
+    int vertices = 6;  // Number of vertices in the graph
     
-    kahnTopologicalSort(graph, numVertices);
+    initializeGraph(&g, vertices);
+    
+    // Adding edges to the graph
+    addEdge(&g, 5, 2);
+    addEdge(&g, 5, 0);
+    addEdge(&g, 4, 0);
+    addEdge(&g, 4, 1);
+    addEdge(&g, 2, 3);
+    addEdge(&g, 3, 1);
+    
+    printf("Topological Sort of the given graph:\n");
+    topologicalSort(&g);
     
     return 0;
 }
