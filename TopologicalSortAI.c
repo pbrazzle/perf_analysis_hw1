@@ -74,7 +74,7 @@ void topologicalSort(Graph *g) {
     
     // Enqueue all vertices with in-degree 0
     i = 0;
-    for (int i = 0; i < g->numVertices; i++) {
+    for (i = 0; i < g->numVertices; i++) {
         if (inDegree[i] == 0) {
             queue[rear++] = i;
         }
