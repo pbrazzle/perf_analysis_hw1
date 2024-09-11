@@ -13,7 +13,7 @@ unsigned int measureTimeInMilliseconds(void (*func)()) {
     
     start = clock();
     int dummy = 0;
-    for (int i = 0; i < 1000000; i++) dummy += i;
+    for (int i = 0; i < 100000000; i++) dummy += i;
     func();
     end = clock();
 
