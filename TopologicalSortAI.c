@@ -32,7 +32,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define MAX_VERTICES 100
+#define MAX_VERTICES 1000
 
 // A structure to represent a graph
 typedef struct {
