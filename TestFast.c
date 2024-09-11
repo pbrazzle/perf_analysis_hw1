@@ -28,6 +28,7 @@ int main() {
 
     printf("Took %d miiliseconds\n", millis);
     
+    /*
     // Free memory
     for (int i = 0; i < vertices; i++) {
         Node *temp = g->adjList[i];
@@ -41,6 +42,7 @@ int main() {
     free(g->adjList);
     free(g->inDegree);
     free(g);
+    */
     
     return 0;
 }
