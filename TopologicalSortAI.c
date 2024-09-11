@@ -43,8 +43,9 @@ typedef struct {
 // Function to create a graph with a given number of vertices
 void initializeGraph(Graph *g, int vertices) {
     g->numVertices = vertices;
-    for (int i = 0; i < vertices; i++) {
-        for (int j = 0; j < vertices; j++) {
+    int i = 0, j = 0;
+    for (i = 0; i < vertices; i++) {
+        for (j = 0; j < vertices; j++) {
             g->adjMatrix[i][j] = 0;
         }
     }
@@ -62,8 +63,9 @@ void topologicalSort(Graph *g) {
     int front = 0, rear = 0;
     
     // Calculate in-degrees of all vertices
-    for (int i = 0; i < g->numVertices; i++) {
-        for (int j = 0; j < g->numVertices; j++) {
+    int i = 0, j = 0;
+    for (i = 0; i < g->numVertices; i++) {
+        for (j = 0; j < g->numVertices; j++) {
             if (g->adjMatrix[j][i] == 1) {
                 inDegree[i]++;
             }
@@ -71,6 +73,7 @@ void topologicalSort(Graph *g) {
     }
     
     // Enqueue all vertices with in-degree 0
+    i = 0;
     for (int i = 0; i < g->numVertices; i++) {
         if (inDegree[i] == 0) {
             queue[rear++] = i;
@@ -86,7 +89,8 @@ void topologicalSort(Graph *g) {
         printf("%d ", u);
         
         // Decrease the in-degree of all adjacent vertices
-        for (int v = 0; v < g->numVertices; v++) {
+        int v = 0;
+        for (v = 0; v < g->numVertices; v++) {
             if (g->adjMatrix[u][v] == 1) {
                 inDegree[v]--;
                 

@@ -96,7 +96,8 @@ Graph* createGraph(int vertices) {
     g->inDegree = (int *)calloc(vertices, sizeof(int));
     g->adjList = (Node **)malloc(vertices * sizeof(Node *));
     
-    for (int i = 0; i < vertices; i++) {
+    int i = 0;
+    for (i = 0; i < vertices; i++) {
         g->adjList[i] = NULL;
     }
     
@@ -116,7 +117,8 @@ void topologicalSort(Graph *g) {
     Queue *q = createQueue();
     
     // Enqueue all vertices with in-degree 0
-    for (int i = 0; i < g->numVertices; i++) {
+    int i = 0;
+    for (i = 0; i < g->numVertices; i++) {
         if (g->inDegree[i] == 0) {
             enqueue(q, i);
         }

@@ -54,7 +54,8 @@ unsigned int measureWallTimeInMilliseconds(void (*func)()) {
 unsigned int* measureMultipleRuns(void (*func)(), unsigned int trials) {
     unsigned int* times = (unsigned int*) malloc(trials * sizeof(unsigned int));
 
-    for (int i = 0; i < trials; ++i) {
+    int i = 0;
+    for (i = 0; i < trials; ++i) {
         times[i] = measureTimeInMilliseconds(func);
     }
 
