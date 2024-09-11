@@ -4,16 +4,14 @@
 Graph g;
 
 void init() {
-    int vertices = 6;  // Number of vertices in the graph
+    int vertices = 100;  // Number of vertices in the graph
     initializeGraph(&g, vertices);
 
     // Adding edges to the graph
-    addEdge(&g, 5, 2);
-    addEdge(&g, 5, 0);
-    addEdge(&g, 4, 0);
-    addEdge(&g, 4, 1);
-    addEdge(&g, 2, 3);
-    addEdge(&g, 3, 1);
+    int i;
+    for (i = 0; i < 99; i++) {
+        addEdge(&g, i, i+1);
+    }
 }
 
 void sort() {
