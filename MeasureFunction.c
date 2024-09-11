@@ -22,8 +22,8 @@ unsigned int measureTimeInMilliseconds(void (*func)()) {
     return clockTimeToMilliseconds(end - start);
 }
 
-timespec timespecDiff(timespec t1, timespec t2) {
-    timespec diff;
+struct timespec timespecDiff(struct timespec t1, struct timespec t2) {
+    struct timespec diff;
 
     if (t2.tv_nsec < t1.tv_nsec) {
         t2.tv_nsec += 1000000000;
@@ -37,13 +37,13 @@ timespec timespecDiff(timespec t1, timespec t2) {
 }
 
 unsigned int measureWallTimeInMilliseconds(void (*func)()) {
-    timespec start, end;
+    struct timespec start, end;
 
     start = clock_gettime(CLOCK_REALTIME, &start);
     func();
     end = clock_gettime(CLOCK_REALTIME, &end);
 
-    timespec diff = timespecDiff(start, end);
+    struct timespec diff = timespecDiff(start, end);
     printf("Took %jd seconds, %09ld ns\n", (intmax_t)diff.tv_sec, diff.tv_nsec);
 
     return 0;
