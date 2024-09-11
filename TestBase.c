@@ -27,9 +27,15 @@ int main() {
     unsigned long int* cpuTimes = measureMultipleCPUTimeRuns(&sort, 20);
 
     int i = 0;
+    printf("Wall times\n")
     for (i = 0; i < 20; i++) {
-        printf("Run %d: Wall - %ld, CPU - %ld\n", i, wallTimes[i], cpuTimes[i]);
+        printf("%ld, ", wallTimes[i]);
     }
+    printf("CPU times\n")
+    for (i = 0; i < 20; i++) {
+        printf("%ld, ", cpuTimes[i]);
+    }
+    printf("\n");
     
     return 0;
 }
