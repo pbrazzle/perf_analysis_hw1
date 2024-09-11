@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-std=c11 -g -O0
+CFLAGS=-g -O0
 
 all: base opt
 
