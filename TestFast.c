@@ -1,10 +1,12 @@
 #include "MeasureFunction.h"
 #include "TopologicalSortAIFast.c"
 
-int main() {
+Graph* g;
+
+void initializeGraph() {
     int vertices = 6;
     Graph *g = createGraph(vertices);
-    
+
     // Adding edges to the graph
     addEdge(g, 5, 2);
     addEdge(g, 5, 0);
@@ -12,9 +14,17 @@ int main() {
     addEdge(g, 4, 1);
     addEdge(g, 2, 3);
     addEdge(g, 3, 1);
-    
-    printf("Topological Sort of the given graph:\n");
+}
+
+void sort() {
     topologicalSort(g);
+}
+
+int main() {
+    printf("Topological Sort of the given graph:\n");
+    unsigned int millis = measureTimeInMilliseconds(&sort);
+
+    printf("Took %d miiliseconds\n", millis);
     
     // Free memory
     for (int i = 0; i < vertices; i++) {
