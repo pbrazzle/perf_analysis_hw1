@@ -60,11 +60,11 @@ int main() {
     measureRuns();
 
     int i = 0;
-    printf("Wall times\n")
+    printf("Wall times\n");
     for (i = 0; i < 20; i++) {
         printf("%ld, ", wallTimes[i]);
     }
-    printf("\nCPU times\n")
+    printf("\nCPU times\n");
     for (i = 0; i < 20; i++) {
         printf("%ld, ", cpuTimes[i]);
     }
