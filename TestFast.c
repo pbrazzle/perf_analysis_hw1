@@ -5,13 +5,12 @@ Graph* g;
 int vertices = 6;
 
 void init() {
-    int vertices = 100;  // Number of vertices in the graph
-    initializeGraph(g, vertices);
+    g = createGraph(vertices);
 
     // Adding edges to the graph
     int i;
     for (i = 0; i < 99; i++) {
-        addEdge(g, i, i+1);
+        addEdge(&g, i, i+1);
     }
 }
 
