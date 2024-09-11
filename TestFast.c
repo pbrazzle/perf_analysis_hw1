@@ -3,7 +3,7 @@
 
 Graph* g;
 
-void initializeGraph() {
+void init() {
     int vertices = 6;
     Graph *g = createGraph(vertices);
 
@@ -21,6 +21,8 @@ void sort() {
 }
 
 int main() {
+    init();
+
     printf("Topological Sort of the given graph:\n");
     unsigned int millis = measureTimeInMilliseconds(&sort);
 
