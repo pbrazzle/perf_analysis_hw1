@@ -4,7 +4,7 @@
 Graph g;
 
 void init() {
-    int vertices = 100;  // Number of vertices in the graph
+    int vertices = 200;  // Number of vertices in the graph
     initializeGraph(&g, vertices);
 
     // Adding edges to the graph
