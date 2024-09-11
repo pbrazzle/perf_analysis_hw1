@@ -25,9 +25,13 @@ int main() {
     init();
 
     printf("Topological Sort of the given graph:\n");
-    unsigned int millis = measureWallTimeInMicroseconds(&sort);
+    unsigned long int* wallTimes = measureMultipleWallTimeRuns(&sort, 20);
+    unsigned long int* cpuTimes = measureMultipleCPUTimeRuns(&sort, 20);
 
-    printf("Took %ld microseconds\n", millis);
+    int i = 0;
+    for (i = 0; i < 20; i++) {
+        printf("Run %d: Wall - %ld, CPU - %ld\n", i, wallTimes[i], cpuTimes[i]);
+    }
     
     /*
     // Free memory

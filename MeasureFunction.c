@@ -45,7 +45,7 @@ unsigned long int measureWallTimeInMicroseconds(void (*func)()) {
     return (diff.tv_sec * 1000000) + (diff.tv_nsec / 1000);
 }
 
-unsigned long int* measureMultipleRuns(void (*func)(), unsigned int trials) {
+unsigned long int* measureMultipleCPUTimeRuns(void (*func)(), unsigned int trials) {
     unsigned long int* times = (unsigned long int*) malloc(trials * sizeof(unsigned long int));
 
     int i = 0;
