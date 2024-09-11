@@ -4,7 +4,7 @@
 Graph g;
 
 void init() {
-    int vertices = 10;  // Number of vertices in the graph
+    int vertices = 50;  // Number of vertices in the graph
     initializeGraph(&g, vertices);
 
     // Adding edges to the graph
@@ -31,7 +31,7 @@ int main() {
     for (i = 0; i < 20; i++) {
         printf("%ld, ", wallTimes[i]);
     }
-    printf("CPU times\n");
+    printf("\nCPU times\n");
     for (i = 0; i < 20; i++) {
         printf("%ld, ", cpuTimes[i]);
     }
