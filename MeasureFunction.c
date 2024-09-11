@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdint.h>
 
 unsigned int clockTimeToMilliseconds(clock_t clockTime) {
     return 1000 * clockTime / CLOCKS_PER_SEC;
@@ -12,8 +13,6 @@ unsigned int measureTimeInMilliseconds(void (*func)()) {
     clock_t start, end;
     
     start = clock();
-    int dummy = 0;
-    for (int i = 0; i < 100000000; i++) dummy += i;
     func();
     end = clock();
 
@@ -21,6 +20,33 @@ unsigned int measureTimeInMilliseconds(void (*func)()) {
     printf("Clock_t time end: %ld\n", end);
 
     return clockTimeToMilliseconds(end - start);
+}
+
+timespec timespecDiff(timespec t1, timespec t2) {
+    timespec diff;
+
+    if (t2.tv_nsec < t1.tv_nsec) {
+        t2.tv_nsec += 1000000000;
+        t2.tv_sec--;
+    }
+
+    diff.tv_sec = t2.tv_sec - t1.tv_sec;
+    diff.tv_nsec = t2.tv_nsec - t1.tv_nsec;
+
+    return diff;
+}
+
+unsigned int measureWallTimeInMilliseconds(void (*func)()) {
+    timespec start, end;
+
+    start = clock_gettime(CLOCK_REALTIME, &start);
+    func();
+    end = clock_gettime(CLOCK_REALTIME, &end);
+
+    timespec diff = timespecDiff(start, end);
+    printf("Took %jd seconds, %09ld ns\n", (intmax_t)diff.tv_sec, diff.tv_nsec);
+
+    return 0;
 }
 
 unsigned int* measureMultipleRuns(void (*func)(), unsigned int trials) {
