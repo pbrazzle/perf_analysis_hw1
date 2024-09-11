@@ -41,9 +41,9 @@ struct timespec timespecDiff(struct timespec t1, struct timespec t2) {
 unsigned int measureWallTimeInMilliseconds(void (*func)()) {
     struct timespec start, end;
 
-    start = clock_gettime(CLOCK_REALTIME, &start);
+    clock_gettime(CLOCK_REALTIME, &start);
     func();
-    end = clock_gettime(CLOCK_REALTIME, &end);
+    clock_gettime(CLOCK_REALTIME, &end);
 
     struct timespec diff = timespecDiff(start, end);
     printf("Took %jd seconds, %09ld ns\n", (intmax_t)diff.tv_sec, diff.tv_nsec);
