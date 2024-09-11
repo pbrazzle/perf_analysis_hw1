@@ -14,38 +14,55 @@ void init() {
     }
 }
 
+void refreshForList(Graph* g, int list) {
+    Node* n = g->adjList[list];
+    while (n) {
+        g->inDegree[n->vertex]++;
+        n = n->next;
+    }
+}
+
+void refreshInDegree(Graph* g) {
+    int i;
+    for (i = 0; i < g->numVertices; i++) {
+        g->inDegree[i] = 0;
+    }
+
+    for (i = 0; i < g->numVertices; i++) {
+        refreshForList(i);
+    }
+}
+
 void sort() {
     topologicalSort(g);
+}
+
+unsigned long int* wallTimes;
+unsigned long int* cpuTimes;
+
+void measureRuns() {
+    wallTimes = (unsigned long int*) malloc(20 * sizeof(unsigned long int*));
+    cpuTimes = (unsigned long int*) malloc(20 * sizeof(unsigned long int*));
+
+    int i;
+    for (i = 0; i < 20; i++) {
+        wallTimes[i] = measureWallTimeInMicroseconds(&sort);
+        refreshInDegree(g);
+        cpuTimes[i] = measureCPUTimeInMicroseconds(&sort);
+        refreshInDegree(g);
+    }
 }
 
 // Main function to demonstrate the usage
 int main() {
     init();
 
-    printf("Topological Sort of the given graph:\n");
-    unsigned long int* wallTimes = measureMultipleWallTimeRuns(&sort, 20);
-    unsigned long int* cpuTimes = measureMultipleCPUTimeRuns(&sort, 20);
+    measureRuns();
 
     int i = 0;
     for (i = 0; i < 20; i++) {
         printf("Run %d: Wall - %ld, CPU - %ld\n", i, wallTimes[i], cpuTimes[i]);
     }
-    
-    /*
-    // Free memory
-    for (int i = 0; i < vertices; i++) {
-        Node *temp = g->adjList[i];
-        while (temp) {
-            Node *next = temp->next;
-            free(temp);
-            temp = next;
-        }
-    }
-    
-    free(g->adjList);
-    free(g->inDegree);
-    free(g);
-    */
 
     return 0;
 }
