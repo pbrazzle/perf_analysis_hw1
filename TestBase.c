@@ -25,9 +25,9 @@ int main() {
     init();
 
     printf("Topological Sort of the given graph:\n");
-    unsigned int millis = measureWallTimeInMilliseconds(&sort);
+    unsigned int millis = measureWallTimeInMicroseconds(&sort);
 
-    printf("Took %d miiliseconds\n", millis);
+    printf("Took %ld microseconds\n", millis);
     
     return 0;
 }

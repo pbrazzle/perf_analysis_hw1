@@ -1,9 +1,9 @@
 #include <time.h>
 
-unsigned int clockTimeToMilliseconds(clock_t clockTime);
+unsigned long int measureCPUTimeInMicroseconds(void (*func)());
 
-unsigned int measureTimeInMilliseconds(void (*func)());
+unsigned long int* measureMultipleCPUTimeRuns(void (*func)(), unsigned int trials);
 
-unsigned int* measureMultipleRuns(void (*func)(), unsigned int trials);
+unsigned long int measureWallTimeInMicroseconds(void (*func)());
 
-unsigned int measureWallTimeInMilliseconds(void (*func)());
+unsigned long int* measureMultipleWallTimeRuns(void (*func)(), unsigned int trials);

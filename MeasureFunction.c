@@ -7,23 +7,6 @@
 
 #define _POSIX_C_SOURCE 200809L
 
-unsigned int clockTimeToMilliseconds(clock_t clockTime) {
-    return 1000 * clockTime / CLOCKS_PER_SEC;
-}
-
-unsigned int measureTimeInMilliseconds(void (*func)()) {
-    clock_t start, end;
-    
-    start = clock();
-    func();
-    end = clock();
-
-    printf("Clock_t time start: %ld\n", start);
-    printf("Clock_t time end: %ld\n", end);
-
-    return clockTimeToMilliseconds(end - start);
-}
-
 struct timespec timespecDiff(struct timespec t1, struct timespec t2) {
     struct timespec diff;
 
@@ -38,7 +21,19 @@ struct timespec timespecDiff(struct timespec t1, struct timespec t2) {
     return diff;
 }
 
-unsigned int measureWallTimeInMilliseconds(void (*func)()) {
+unsigned long int measureCPUTimeInMicroseconds(void (*func)()) {
+    struct timespec start, end;
+
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &start);
+    func();
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &end);
+
+    struct timespec diff = timespecDiff(start, end);
+
+    return (diff.tv_sec * 1000000) + (diff.tv_nsec / 1000);
+}
+
+unsigned long int measureWallTimeInMicroseconds(void (*func)()) {
     struct timespec start, end;
 
     clock_gettime(CLOCK_REALTIME, &start);
@@ -46,17 +41,27 @@ unsigned int measureWallTimeInMilliseconds(void (*func)()) {
     clock_gettime(CLOCK_REALTIME, &end);
 
     struct timespec diff = timespecDiff(start, end);
-    printf("Took %jd seconds, %09ld ns\n", (intmax_t)diff.tv_sec, diff.tv_nsec);
 
-    return 0;
+    return (diff.tv_sec * 1000000) + (diff.tv_nsec / 1000);
 }
 
-unsigned int* measureMultipleRuns(void (*func)(), unsigned int trials) {
-    unsigned int* times = (unsigned int*) malloc(trials * sizeof(unsigned int));
+unsigned long int* measureMultipleRuns(void (*func)(), unsigned int trials) {
+    unsigned long int* times = (unsigned long int*) malloc(trials * sizeof(unsigned long int));
 
     int i = 0;
     for (i = 0; i < trials; ++i) {
-        times[i] = measureTimeInMilliseconds(func);
+        times[i] = measureCPUTimeInMicroseconds(func);
+    }
+
+    return times;
+}
+
+unsigned long int* measureMultipleWallTimeRuns(void (*func)(), unsigned int trials) {
+    unsigned long int* times = (unsigned long int*) malloc(trials * sizeof(unsigned long int));
+
+    int i = 0;
+    for (i = 0; i < trials; ++i) {
+        times[i] = measureWallTimeInMicroseconds(func);
     }
 
     return times;

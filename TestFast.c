@@ -20,13 +20,14 @@ void sort() {
     topologicalSort(g);
 }
 
+// Main function to demonstrate the usage
 int main() {
     init();
 
     printf("Topological Sort of the given graph:\n");
-    unsigned int millis = measureWallTimeInMilliseconds(&sort);
+    unsigned int millis = measureWallTimeInMicroseconds(&sort);
 
-    printf("Took %d miiliseconds\n", millis);
+    printf("Took %ld microseconds\n", millis);
     
     /*
     // Free memory
@@ -43,6 +44,6 @@ int main() {
     free(g->inDegree);
     free(g);
     */
-    
+
     return 0;
 }
