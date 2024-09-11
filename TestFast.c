@@ -2,7 +2,7 @@
 #include "TopologicalSortAIFast.c"
 
 Graph* g;
-int vertices = 10;
+int vertices = 50;
 
 void init() {
     g = createGraph(vertices);
