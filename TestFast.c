@@ -2,14 +2,14 @@
 #include "TopologicalSortAIFast.c"
 
 Graph* g;
-int vertices = 100;
+int vertices = 10;
 
 void init() {
     g = createGraph(vertices);
 
     // Adding edges to the graph
     int i;
-    for (i = 0; i < 99; i++) {
+    for (i = 0; i < vertices-1; i++) {
         addEdge(g, i, i+1);
     }
 }

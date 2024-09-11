@@ -4,12 +4,12 @@
 Graph g;
 
 void init() {
-    int vertices = 100;  // Number of vertices in the graph
+    int vertices = 10;  // Number of vertices in the graph
     initializeGraph(&g, vertices);
 
     // Adding edges to the graph
     int i;
-    for (i = 0; i < 99; i++) {
+    for (i = 0; i < vertices-1; i++) {
         addEdge(&g, i, i+1);
     }
 }
