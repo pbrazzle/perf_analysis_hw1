@@ -5,7 +5,7 @@ Graph* g;
 int vertices = 6;
 
 void init() {
-    Graph *g = createGraph(vertices);
+    g = createGraph(vertices);
 
     // Adding edges to the graph
     addEdge(g, 5, 2);
